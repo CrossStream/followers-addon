@@ -194,7 +194,8 @@ class FollowersAPIHandler(APIHandler):
                 for index, item in enumerate(self.persistent_data['items']):
                     #print(str(index))
                 
-                    if 'thing1' in item and 'thing2' in item and 'property1' in item and 'property2' in item and 'limit1' in item and 'limit2' in item and 'limit3' in item and 'limit4' in item and 'enabled' in item:
+                    if 'thing1' in item and 'thing2' in item and 'property1' in item and 'property2' in item and 'enabled' in item:
+                        # and 'limit1' in item and 'limit2' in item and 'limit3' in item and 'limit4' in item 
                         #print("all variables are there")
                         #print(str( bool(item['enabled']) ))
                         if bool(item['enabled']) is False:
@@ -233,8 +234,8 @@ class FollowersAPIHandler(APIHandler):
                                     #print("original value is an empty string.") # this happens if the gateway has just been rebooted, and the property doesn not have a value yet.
                                     continue
                                     
-                                if min(float(item['limit1']), float(item['limit2'])) <= float(original_value) <= max(float(item['limit1']), float(item['limit2'])):
-                                    output = translate(original_value, item['limit1'], item['limit2'], item['limit3'], item['limit4'])
+                                if True: # TODO handling other types than strings
+                                    output = original_value
                                     #print("got translated output: " + str(output))
 
                             
@@ -242,7 +243,7 @@ class FollowersAPIHandler(APIHandler):
                                         item['previous_value'] = None
 
                                     try:
-                                        numeric_value = get_int_or_float(output)
+                                        numeric_value = (output) # TODO rename
                                         #print("initial numeric_value = " + str(numeric_value))
                                         if 'property2_type' in item:
                                             if str(item['property2_type']) == 'integer':

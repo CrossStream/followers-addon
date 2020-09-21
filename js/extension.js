@@ -7,7 +7,7 @@
 
       	this.content = '';
 		
-		this.item_elements = ['limit1','limit2','thing1','property1','limit3','limit4','thing2','property2'];
+		this.item_elements = ['thing1','property1','thing2','property2'];
 		this.all_things;
 		this.items_list = [];
 		
@@ -327,20 +327,13 @@
 						}
 					}
 					//console.log( "Is item checked?" + item.querySelectorAll('.extension-followers-enabled')[0].checked );
-					
-					// Check if the minimum and maximum values are not the same, as that could lead to strange errors
-					const delta1 = Math.abs( new_values['limit1'] - new_values['limit2'] );
-					const delta2 = Math.abs( new_values['limit3'] - new_values['limit4'] );
-					//console.log("delta1 = " + delta1);
-					//console.log("delta2 = " + delta2);
-					
 					// Set the item to enabled as soon as all values are filled in properly. This is done only once.
-					if( incomplete == false && delta1 > 0 && delta2 > 0 && item.classList.contains('new') && item.querySelectorAll('.extension-followers-enabled')[0].checked == false ){
+					if (incomplete == false && item.classList.contains('new') && item.querySelectorAll('.extension-followers-enabled')[0].checked == false ){
 					    item.classList.remove('new');
 						item.querySelectorAll('.extension-followers-enabled')[0].checked = true;
 					}
 					// Disable an item if it no longer has all required values, or if they are set incorrectly
-					if( (incomplete == true || delta1 == 0 || delta2 == 0 ) && item.querySelectorAll('.extension-followers-enabled')[0].checked == true ){
+					if (incomplete == true && item.querySelectorAll('.extension-followers-enabled')[0].checked == true ){
 						item.querySelectorAll('.extension-followers-enabled')[0].checked = false;
 					}
 
@@ -413,9 +406,8 @@
 			
 			var system_title = properties[prop]['links'][0]['href'].substr(properties[prop]['links'][0]['href'].lastIndexOf('/') + 1);
 
-			// If a property is a number, add it to the list of possible source properties
-			if( properties[prop]['type'] == 'integer' || properties[prop]['type'] == 'float' || properties[prop]['type'] == 'number'){
-				
+		    // If a property is a number, add it to the list of possible source properties
+		    if (properties[prop]['type'] === 'string') {
 				property1_list.push(title);
 				property1_system_list.push(system_title);
 				
@@ -430,7 +422,9 @@
 					property2_list.push(title);
 					property2_system_list.push(system_title);
 				}
-			}
+		    } else if (properties[prop]['type'] == 'integer' || properties[prop]['type'] == 'float' || properties[prop]['type'] == 'number'){
+                      console.log("TODO");
+		    }
 		}
 		
 		// Sort lists alphabetically.
